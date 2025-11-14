@@ -803,11 +803,29 @@ def find_earlier_page_break(children, absolute_boxes, fixed_boxes):
             if previous_in_flow is not None and (
                     block_level_page_break(child, previous_in_flow) not in
                     ('avoid', 'avoid-page')):
-                index += 1  # break after child
-                new_children = children[:index]
-                # Get the index in the original parent
-                resume_at = (children[index].index, None)
-                break
+                if isinstance(child, boxes.TableRowGroupBox):
+                    result = find_earlier_page_break(
+                        child.children, absolute_boxes, fixed_boxes)
+                    if result:
+                        new_grand_children, resume_at = result
+                        new_child = child.copy_with_children(new_grand_children)
+                        old_height = new_child.height
+                        new_height = child.children[resume_at[0] - child.children[0].index].position_y - new_child.position_y
+                        new_child.height = new_height
+                        diff_height = old_height - new_height
+                        for child in children[index+1:]:
+                            for descendant in child.descendants():
+                                descendant.position_y -= diff_height
+                        new_children = list(children[:index]) + [new_child] + list(children[index+1:])
+                        resume_at = (new_child.index, resume_at)
+                        index += 1  # Remove placeholders after child
+                        break
+                else:
+                    index += 1  # break after child
+                    new_children = children[:index]
+                    # Get the index in the original parent
+                    resume_at = (children[index].index, None)
+                    break
             previous_in_flow = child
         if child.is_in_normal_flow() and (
                 child.style['break_inside'] not in ('avoid', 'avoid-page')):

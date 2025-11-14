@@ -263,7 +263,11 @@ def table_layout(context, table, max_position_y, skip_stack, containing_block,
                         for cell in row.children) - row.position_y
                 else:
                     row.baseline = 0
-        group.height = position_y - group.position_y
+        calculated_y = group.position_y
+        for row in group.children:
+            calculated_y += row.height + border_spacing_y
+
+        group.height = calculated_y - group.position_y
         if group.children:
             # The last border spacing is outside of the group.
             group.height -= border_spacing_y
