@@ -1,0 +1,52 @@
+[project]
+name = 'weasyprint'
+description = 'The Awesome Document Factory'
+keywords = ['html', 'css', 'pdf', 'converter']
+authors = [{name = 'Simon Sapin', email = 'simon.sapin@exyr.org'}]
+requires-python = '>=3.5'
+readme = {file = 'README.rst', content-type = 'text/x-rst'}
+license = {file = 'LICENSE'}
+dependencies = [
+  'setuptools >=39.2.0',
+  'cffi >=0.6',
+  'html5lib >=0.999999999',
+  'cairocffi >=0.9.0',
+  'tinycss2 >=1.0.0',
+  'cssselect2 >=0.1',
+  'CairoSVG >=2.4.0',
+  'Pyphen >=0.9.1',
+]
+classifiers = [
+  'Development Status :: 5 - Production/Stable',
+  'Intended Audience :: Developers',
+  'License :: OSI Approved :: BSD License',
+  'Programming Language :: Python :: 3',
+  'Programming Language :: Python :: 3.5',
+  'Programming Language :: Python :: 3.6',
+  'Programming Language :: Python :: 3.7',
+  'Programming Language :: Python :: 3.8',
+  'Programming Language :: Python :: 3.9',
+  'Programming Language :: Python :: 3.10',
+  'Programming Language :: Python :: 3.11',
+  'Programming Language :: Python :: 3.12',
+  'Programming Language :: Python :: 3.13',
+  'Topic :: Internet :: WWW/HTTP',
+  'Topic :: Text Processing :: Markup :: HTML',
+  'Topic :: Multimedia :: Graphics :: Graphics Conversion',
+  'Topic :: Printing',
+]
+dynamic = ['version']
+
+[project.urls]
+Homepage = 'https://weasyprint.org/'
+Documentation = 'https://doc.courtbouillon.org/weasyprint/'
+Code = 'https://github.com/Kozea/WeasyPrint'
+Issues = 'https://github.com/Kozea/WeasyPrint/issues'
+Changelog = 'https://github.com/Kozea/WeasyPrint/releases'
+Donation = 'https://opencollective.com/courtbouillon'
+
+[project.optional-dependencies]
+test = ['pytest']
+
+[project.scripts]
+weasyprint = 'weasyprint.__main__:main'
